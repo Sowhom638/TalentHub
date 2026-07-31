@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #FAD24D;
+  --color-secondary: #21D0C3;
+  --color-primaryBtn: #FF5B62;
+  --color-secondaryBtn: #F0BA7D;
+  --color-lavender: #B8A9F0;
+  --color-deepPurple: #8B7FD4;
+  --color-coral: #FF5B62;
+  --color-mint: #4ADE80;
+  --color-sunYellow: #FDE047;
+  --color-cherryRed: #EF4444;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #ffffff;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #FF5B62 transparent;
+}
+
+html::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: #FF5B62;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background-color: #FF5B62;
+}
+
+/* Tilted card animations */
+.tilt-card-1 { transform: rotate(-8deg); }
+.tilt-card-2 { transform: rotate(6deg); }
+.tilt-card-3 { transform: rotate(-4deg); }
+
+.tilt-card-1:hover { transform: rotate(-4deg) scale(1.03); }
+.tilt-card-2:hover { transform: rotate(3deg) scale(1.03); }
+.tilt-card-3:hover { transform: rotate(-2deg) scale(1.03); }
+
+/* Decorative flower spin */
+@keyframes flowerSpin {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(15deg); }
+}
+.flower-spin {
+  animation: flowerSpin 4s ease-in-out infinite;
+}
+
+/* Highlight box shadow */
+.highlight-box {
+  box-shadow: 6px 6px 0 #000;
+}
+
+/* Button shadow */
+.btn-shadow {
+  box-shadow: 4px 4px 0 #000;
+}
+.btn-shadow:hover {
+  box-shadow: 2px 2px 0 #000;
+  transform: translate(2px, 2px);
+}
+
+/* Nav icon button */
+.nav-icon-btn {
+  background: #FAD24D;
+  border: 2px solid #000;
+  transition: all 0.2s;
+}
+.nav-icon-btn:hover {
+  background: #fff;
+  transform: translateY(-2px);
+}
