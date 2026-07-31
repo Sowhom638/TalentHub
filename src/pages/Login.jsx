@@ -287,12 +287,6 @@ export default function Login() {
                   <label className="block text-sm font-black text-black">
                     Password
                   </label>
-                  <a
-                    href="#"
-                    className="text-xs font-bold text-purple-600 hover:text-purple-800 underline decoration-2 underline-offset-2"
-                  >
-                    Forgot password?
-                  </a>
                 </div>
                 <div className="relative">
                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-black" />
