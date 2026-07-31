@@ -116,7 +116,7 @@ export default function App() {
                   type="submit"
                   className="bg-purple-500 text-white p-4 rounded-xl font-bold hover:bg-purple-600 transition-colors flex items-center justify-center gap-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mx-2 mt-2 border-2 border-black"
                 >
-                  Shop Now
+                  Search
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </form>
