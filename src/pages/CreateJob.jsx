@@ -67,6 +67,10 @@ export default function CreateJob() {
       toast.error("Minimum salary cannot be greater than maximum salary.");
       return;
     }
+    if (Number(form.experienceMin) > Number(form.experienceMax)) {
+      toast.error("Minimum experience cannot be greater than maximum experience.");
+      return;
+    }
 
     const payload = {
       title: form.title.trim(),

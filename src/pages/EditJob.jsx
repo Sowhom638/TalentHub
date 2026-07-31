@@ -95,6 +95,10 @@ const handleSubmit = async (e) => {
       toast.error("Minimum salary cannot be greater than maximum salary.");
       return;
     }
+    if (experienceMin > experienceMax) {
+      toast.error("Minimum experience cannot be greater than maximum experience.");
+      return;
+    }
 
     const payload = {
       title,
