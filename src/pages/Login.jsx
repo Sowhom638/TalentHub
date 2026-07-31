@@ -19,6 +19,7 @@ import { toast, ToastContainer } from "react-toastify";
 export default function Login() {
   const [role, setRole] = useState("applicant");
   const [showPw, setShowPw] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -31,6 +32,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
       await dispatch(loginUser({ role, ...form })).unwrap();
       toast.success("Login successful!");
@@ -39,6 +41,8 @@ export default function Login() {
       }, 2000);
     } catch (err) {
       toast.error(err || "Login failed");
+    }finally{
+      setIsSubmitting(false);
     }
   };
 
@@ -316,13 +320,21 @@ export default function Login() {
               {/* Submit */}
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className={`w-full py-4 text-black font-black rounded-xl text-base border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 active:translate-y-0 transition-all flex items-center justify-center gap-2 mt-6 ${
                   role === "applicant"
                     ? "bg-purple-500"
                     : "bg-cyan-400"
                 }`}
               >
-                Sign In
+                {isSubmitting ? (
+                  <>
+                    <div className="w-6 h-6 border-4 border-black/30 border-t-black rounded-full animate-spin" />
+                    Sign Account...
+                  </>
+                ) : (
+                  "Sign In"
+                )}
                 <ArrowRight className="w-5 h-5" />
               </button>
             </form>
