@@ -64,14 +64,28 @@ export default function JobDetails() {
     }
   }, [currentJob, jobId]);
 
+
+  const isRecruiter = user?.role === "recruiter";
+
   const handleToggleArchive = async () => {
+    if (!window.confirm(`Are you sure you want to ${currentJob.isActive ? "archive" : "unarchive"} this job?`)) return;
+    
+    if (!isRecruiter) {
+      toast.error("You are not authorized to modify this job.");
+      return;
+    }
+
     setIsActionLoading(true);
     try {
       await dispatch(toggleArchiveJob(jobId)).unwrap();
-      currentJob.isActive ? toast.success("Job is now archived") : toast.success("Job is now unarchived");
+      const newStatus = currentJob.isActive ? "archived" : "unarchived";
+      toast.success(`Job is now ${newStatus}`);
+      
+      // Refresh to reflect the change immediately
+      dispatch(fetchJobById(jobId));
     } catch (err) {
-      console.error(err);
-      currentJob.isActive ? toast.error("Failed to archive") : toast.error("Failed to unarchive")
+      console.error("Archive Error:", err);
+      toast.error(err || "Failed to update job status");
     } finally {
       setIsActionLoading(false);
     }
@@ -157,8 +171,6 @@ export default function JobDetails() {
   }
 
   if (!currentJob) return null;
-
-  const isRecruiter = user?.role === "recruiter";
 
   return (
     <>
