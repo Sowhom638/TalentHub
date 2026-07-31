@@ -159,7 +159,6 @@ export default function JobDetails() {
   if (!currentJob) return null;
 
   const isRecruiter = user?.role === "recruiter";
-  const isOwner = isRecruiter && String(user?._id) === String(currentJob.recruiter?._id);
 
   return (
     <>
@@ -202,7 +201,7 @@ export default function JobDetails() {
               </div>
 
               {/* Action Card (For Job Owner) */}
-              {isOwner && (
+              {isRecruiter && (
                 <div className="bg-white p-6 rounded-2xl border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] w-full md:w-80 shrink-0">
                   <h3 className="text-sm font-black text-black uppercase tracking-wide mb-4 border-b-4 border-black pb-2">Job Actions</h3>
                   <div className="space-y-3">
@@ -393,7 +392,7 @@ export default function JobDetails() {
               )}
 
               {/* AI Hiring Assistant (For Job Owner) */}
-              {isOwner && (
+              {isRecruiter && (
                 <div className="bg-white p-6 rounded-2xl border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
                   <AIHiringAssistant jobId={jobId} />
                 </div>
