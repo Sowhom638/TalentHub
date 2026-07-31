@@ -64,28 +64,14 @@ export default function JobDetails() {
     }
   }, [currentJob, jobId]);
 
-
-  const isRecruiter = user?.role === "recruiter";
-
   const handleToggleArchive = async () => {
-    if (!window.confirm(`Are you sure you want to ${currentJob.isActive ? "archive" : "unarchive"} this job?`)) return;
-    
-    if (!isRecruiter) {
-      toast.error("You are not authorized to modify this job.");
-      return;
-    }
-
     setIsActionLoading(true);
     try {
       await dispatch(toggleArchiveJob(jobId)).unwrap();
-      const newStatus = currentJob.isActive ? "archived" : "unarchived";
-      toast.success(`Job is now ${newStatus}`);
-      
-      // Refresh to reflect the change immediately
-      dispatch(fetchJobById(jobId));
+      currentJob.isActive ? toast.success("Job is now archived") : toast.success("Job is now unarchived");
     } catch (err) {
-      console.error("Archive Error:", err);
-      toast.error(err || "Failed to update job status");
+      console.error(err);
+      currentJob.isActive ? toast.error("Failed to archive") : toast.error("Failed to unarchive")
     } finally {
       setIsActionLoading(false);
     }
@@ -172,6 +158,9 @@ export default function JobDetails() {
 
   if (!currentJob) return null;
 
+  const isRecruiter = user?.role === "recruiter";
+  const isOwner = isRecruiter && String(user?._id) === String(currentJob.recruiter?._id);
+
   return (
     <>
       <Navbar />
@@ -213,7 +202,7 @@ export default function JobDetails() {
               </div>
 
               {/* Action Card (For Job Owner) */}
-              {isRecruiter && (
+              {isOwner && (
                 <div className="bg-white p-6 rounded-2xl border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] w-full md:w-80 shrink-0">
                   <h3 className="text-sm font-black text-black uppercase tracking-wide mb-4 border-b-4 border-black pb-2">Job Actions</h3>
                   <div className="space-y-3">
@@ -404,7 +393,7 @@ export default function JobDetails() {
               )}
 
               {/* AI Hiring Assistant (For Job Owner) */}
-              {isRecruiter && (
+              {isOwner && (
                 <div className="bg-white p-6 rounded-2xl border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
                   <AIHiringAssistant jobId={jobId} />
                 </div>
